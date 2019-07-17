@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Exemplo de Eventos em Javascript + (createElement, createTextNode, appendChild e toggle)</title>
+        <meta charset="utf-8">      
+         
+         <style>
+             .done{
+                 text-decoration: line-through;
+                 color: #555;
+             }
+
+             li:hover{
+                 cursor: pointer;
+             }
+        </style>
+          
+    </head>
+    
+    <body>
+        <div class="container">
+            <h1>Exemplo de Eventos em Javascript + (createElement, createTextNode, appendChild e toggle)</h1>     
+            
+            <input type="text" id="txtTask">
+            <button id="btn">Cadastre uma tarefa:</button>       
+            
+            <ul>
+                <li>Meus estudos com javascript</li>
+                <li>Eventos em Javascript</li>
+                <li>Assistir Netflix</li>
+            </ul>
+
+        </div>
+        
+        <script>
+            
+(function(){
+    'use strict';
+    
+    var $ul = document.querySelector('ul');
+    var $lis = $ul.querySelectorAll('li');
+    var $txtTask = document.querySelector('#txtTask');
+    var $btn = document.querySelector('#btn');
+    
+    $btn.addEventListener('click', addTask);
+    $txtTask.addEventListener('keyup', function(e){
+        if(e.keyCode === 13) {
+            addTask();
+        }
+    });
+    
+    $ul.addEventListener('click', function (e){
+        if(e.target.nodeName === 'LI'){
+            toogleDone(e.target);
+        }
+    })
+    
+    function toogleDone(li){
+        li.classList.toggle('done');
+    }
+    
+    function addTask(){
+
+        if ($txtTask.value) {
+            var li = document.createElement('li');
+            var text = document.createTextNode($txtTask.value);
+            
+            li.appendChild(text);
+            
+            $ul.appendChild(li);
+            
+            $txtTask.value = '';
+            $txtTask.focus();
+        } else{
+            alert('Descreva a tarefa!');
+            $txtTask.focus();
+        }   
+    }
+        
+})()
+            
+        </script>
+        
+    </body>
+</html>
